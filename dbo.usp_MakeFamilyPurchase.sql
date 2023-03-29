@@ -1,6 +1,10 @@
 CREATE PROC MakeFamilyPurchase (@FamilySurName varchar(255))
     AS
-    IF (@FamilySurName IS NULL)
+    IF (@FamilySurName NOT IN (
+        SELECT SurName
+        FROM dbo.Family
+        )
+    )
         PRINT N'No such dbo.Family.SurName exists';
     ELSE 
         UPDATE dbo.Family 
@@ -12,4 +16,4 @@ CREATE PROC MakeFamilyPurchase (@FamilySurName varchar(255))
                 FROM dbo.Family
                 WHERE SurName=@FamilySurName
             )
-        );
+    );
