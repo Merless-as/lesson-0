@@ -1,11 +1,9 @@
 CREATE FUNCTION GetSKUPrice ( @ID_SKU AS INT )
-RETURNS decimal(18, 2)
+RETURNS TABLE
 AS
 
-BEGIN
-    DECLARE @Cost decimal(18, 2);
-    SELECT @Cost = b.Value/b.Quantity
+RETURN (
+    SELECT CAST(b.Value/b.Quantity AS DECIMAL(18, 2)) as Price
     FROM dbo.Basket as b
-    WHERE b.ID_SKU=@ID_SKU;
-    RETURN @Cost;
-END;
+    WHERE b.ID_SKU=@ID_SKU
+);
