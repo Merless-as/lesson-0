@@ -12,13 +12,16 @@ CREATE PROC MakeFamilyPurchase (@FamilySurName varchar(255))
             );
         END;
     ELSE 
-        UPDATE dbo.Family 
-        SET BudgetValue -= Bas.sum 
-        FROM dbo.Family as Fam 
-        JOIN (
-            SELECT ID_Family, SUM(Value) as sum
-            FROM dbo.Basket
-            GROUP BY ID_Family
-        ) as Bas
-        ON Fam.ID=Bas.ID_Family
-        WHERE SurName=@FamilySurName;
+        Begin
+            WITH cte AS (
+                SELECT ID_Family, SUM(Value) as sum
+                FROM dbo.Basket
+                GROUP BY ID_Family
+            )
+            UPDATE Fam 
+            SET BudgetValue -= cte.sum 
+            FROM dbo.Family as Fam 
+            JOIN cte 
+            ON Fam.ID=cte.ID_Family
+            WHERE SurName=@FamilySurName;
+        END;
