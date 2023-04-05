@@ -5,7 +5,7 @@ AS
 UPDATE dbo.Basket
 SET DiscountValue = (
     CASE 
-        WHEN EXISTS ( 
+        WHEN ID_SKU IN ( 
             SELECT  ID_SKU
             FROM inserted
             GROUP BY ID_SKU
