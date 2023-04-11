@@ -17,11 +17,11 @@ CREATE PROC MakeFamilyPurchase (@FamilySurName varchar(255))
                 SELECT ID_Family, SUM(Value) as sum
                 FROM dbo.Basket
                 GROUP BY ID_Family
+                WHERE SurName=@FamilySurName
             )
             UPDATE Fam 
             SET BudgetValue -= cte.sum 
             FROM dbo.Family as Fam 
             JOIN cte 
-            ON Fam.ID=cte.ID_Family
-            WHERE SurName=@FamilySurName;
+            ON Fam.ID=cte.ID_Family;
         END;
