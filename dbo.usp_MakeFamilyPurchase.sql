@@ -16,8 +16,8 @@ CREATE PROC MakeFamilyPurchase (@FamilySurName varchar(255))
             WITH cte AS (
                 SELECT ID_Family, SUM(Value) as sum
                 FROM dbo.Basket
-                GROUP BY ID_Family
                 WHERE SurName=@FamilySurName
+                GROUP BY ID_Family
             )
             UPDATE Fam 
             SET BudgetValue -= cte.sum 
