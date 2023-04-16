@@ -12,10 +12,12 @@ UPDATE dbo.Basket
 SET DiscountValue = (
     CASE 
         WHEN count_value > 1 
-            Then Value * 0.05
+            Then b.Value * 0.05
         ELSE 0
     END
 )
 FROM dbo.Basket as b
 JOIN cte 
-ON cte.ID_SKU=b.ID_SKU;
+ON cte.ID_SKU=b.ID_SKU
+JOIN inserted as i
+ON i.ID=b.ID;
