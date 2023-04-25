@@ -1,9 +1,8 @@
 CREATE PROC MakeFamilyPurchase (@FamilySurName varchar(255))
     AS
     IF (@FamilySurName NOT IN (
-        SELECT 
-            SurName
-        FROM dbo.Family
+            SELECT SurName
+            FROM dbo.Family
         )
     )
         BEGIN
@@ -22,8 +21,7 @@ CREATE PROC MakeFamilyPurchase (@FamilySurName varchar(255))
                 WHERE SurName=@FamilySurName
                 GROUP BY ID_Family
             )
-            UPDATE 
-                Fam 
+            UPDATE Fam 
             SET BudgetValue -= cte.sum 
             FROM dbo.Family as Fam 
                 JOIN cte ON Fam.ID=cte.ID_Family;
