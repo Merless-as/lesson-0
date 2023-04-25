@@ -3,12 +3,16 @@ AFTER INSERT
 AS
 
 WITH cte AS (
-    SELECT ID_SKU, COUNT(*) as count_value
+    SELECT 
+        ID_SKU
+        ,COUNT(*) as count_value
     FROM inserted
-    GROUP BY ID_SKU
+    GROUP BY 
+        ID_SKU
 )
 
-UPDATE dbo.Basket
+UPDATE 
+    dbo.Basket
 SET DiscountValue = (
     CASE 
         WHEN count_value > 1 
@@ -17,7 +21,5 @@ SET DiscountValue = (
     END
 )
 FROM dbo.Basket as b
-JOIN cte 
-ON cte.ID_SKU=b.ID_SKU
-JOIN inserted as i
-ON i.ID=b.ID;
+    JOIN cte ON cte.ID_SKU=b.ID_SKU
+    JOIN inserted as i ON i.ID=b.ID;
