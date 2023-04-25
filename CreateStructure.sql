@@ -1,24 +1,24 @@
-CREATE TABLE dbo.SKU  
+create table dbo.SKU  
 (
-    ID INT IDENTITY(1, 1) PRIMARY KEY
-    ,Code AS ('s'+ CAST(ID AS VARCHAR(12))) UNIQUE
-    ,Name VARCHAR(20)
+    ID int identity(1, 1) primary key
+    ,Code as ('s'+ cast(ID as varchar(12))) unique
+    ,Name varchar(20)
 );
 
-CREATE TABLE dbo.Family 
+create table dbo.Family 
 (
-    ID INT IDENTITY(1, 1) PRIMARY KEY
-    ,SurName VARCHAR(20)
-    ,BudgetValue MONEY
+    ID int identity(1, 1) primary key
+    ,SurName varchar(20)
+    ,BudgetValue money
 );
 
-CREATE TABLE dbo.Basket 
+create table dbo.Basket 
 (
-    ID INT IDENTITY(1, 1)
-    ,ID_SKU INT FOREIGN KEY REFERENCES dbo.SKU(ID) ON DELETE CASCADE
-    ,ID_Family INT FOREIGN KEY REFERENCES dbo.Family(ID) ON DELETE CASCADE
-    ,Quantity FLOAT CHECK (Quantity >= 0)
-    ,Value FLOAT CHECK (Value >= 0)
-    ,PurchaseDate DATE DEFAULT (SYSDATETIME())
-    ,DiscountValue FLOAT
+    ID int identity(1, 1)
+    ,ID_SKU int foreign key references dbo.SKU(ID) on delete cascade
+    ,ID_Family int foreign key references dbo.Family(ID) on delete cascade
+    ,Quantity float check (Quantity >= 0)
+    ,Value float check (Value >= 0)
+    ,PurchaseDate date default (sysdatetime())
+    ,DiscountValue float
 );
