@@ -7,12 +7,10 @@ WITH cte AS (
         ID_SKU
         ,COUNT(*) as count_value
     FROM inserted
-    GROUP BY 
-        ID_SKU
+    GROUP BY ID_SKU
 )
 
-UPDATE 
-    dbo.Basket
+UPDATE dbo.Basket
 SET DiscountValue = (
     CASE 
         WHEN count_value > 1 
