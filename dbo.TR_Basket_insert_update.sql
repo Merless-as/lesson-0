@@ -1,23 +1,23 @@
-CREATE TRIGGER TR_Basket_insert_update ON dbo.Basket
-AFTER INSERT
-AS
+create trigger TR_Basket_insert_update on dbo.Basket
+after insert 
+as
 
-WITH cte AS (
-    SELECT 
+with cte as (
+    select
         ID_SKU
-        ,COUNT(*) as count_value
-    FROM inserted
-    GROUP BY ID_SKU
+        ,count(*) as count_value
+    from inserted
+    group by ID_SKU
 )
 
-UPDATE dbo.Basket
-SET DiscountValue = (
-    CASE 
-        WHEN count_value > 1 
-            Then b.Value * 0.05
-        ELSE 0
-    END
+update dbo.Basket
+set DiscountValue = (
+    case 
+        when count_value > 1 
+            then b.Value * 0.05
+        else 0
+    end
 )
-FROM dbo.Basket as b
-    JOIN cte ON cte.ID_SKU=b.ID_SKU
-    JOIN inserted as i ON i.ID=b.ID;
+from dbo.Basket as b
+    join cte on cte.ID_SKU=b.ID_SKU
+    join inserted as i on i.ID=b.ID;
