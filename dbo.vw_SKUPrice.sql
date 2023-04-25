@@ -1,7 +1,7 @@
-CREATE ViEW SKUPrice AS
-    SELECT 
+create view SKUPrice as
+    select
         ID
         ,Code
         ,Name
-        ,dbo.GetSKUPrice(ID) AS Price
-    FROM dbo.SKU;
+        ,dbo.GetSKUPrice(ID) as Price
+    from dbo.SKU;
